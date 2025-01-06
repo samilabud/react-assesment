@@ -27,7 +27,18 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        exclude: /node_modules/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader", // Resolves CSS imports
+            options: {
+              modules: {
+                localIdentName: "[name]__[local]___[hash:base64:5]", // Naming convention for CSS classes
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
@@ -62,5 +73,3 @@ module.exports = {
     new Dotenv(),
   ],
 };
-
-console.log("REACT_APP_PORT:", process.env.REACT_APP_PORT);
