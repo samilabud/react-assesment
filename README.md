@@ -14,7 +14,7 @@ This project is a simple React application that demonstrates the use of React Ro
 1. Clone the repository:
 
 ```sh
-git clone <repository-url>
+git clone https://github.com/samilabud/react-assesment
 cd react-webpack-assessment
 ```
 
@@ -64,7 +64,3 @@ The application uses React Router for navigation. The routes are defined in the 
 
 - `/`: Displays the ProjectList component.
 - `/edit/:id`: Displays the ProjectEdit component for the project with the specified ID.
-
-## License
-
-This project is licensed under the ISC License.
