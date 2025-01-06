@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import {
-  TextField,
-  Button,
-  Box,
-  CircularProgress,
   Alert,
+  Box,
+  Button,
+  Checkbox,
+  CircularProgress,
   Divider,
+  FormControlLabel,
+  TextField,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { SidebarRefreshContext } from "../contexts/SidebarRefreshContext";
 
 const ProjectEdit = () => {
   const { id } = useParams();
@@ -18,6 +21,7 @@ const ProjectEdit = () => {
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { triggerRefresh } = useContext(SidebarRefreshContext);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -46,13 +50,15 @@ const ProjectEdit = () => {
           return;
         }
 
-        // Convert date fields to Date objects:
+        // Convert date fields to Date objects
         const fixedProject = {
           ...foundProject,
           startDate: foundProject.startDate
             ? new Date(foundProject.startDate)
             : null,
           endDate: foundProject.endDate ? new Date(foundProject.endDate) : null,
+          // In case isFavorite does not exist on older entries, default to false
+          isFavorite: foundProject.isFavorite ?? false,
         };
 
         // 3. If everything is good, set the project to state
@@ -75,9 +81,13 @@ const ProjectEdit = () => {
     setProject({ ...project, [name]: dateValue });
   };
 
+  const handleCheckChange = (e) => {
+    // Toggle the isFavorite flag in state
+    setProject({ ...project, isFavorite: e.target.checked });
+  };
+
   const handleSave = () => {
     try {
-      // 1. Get the existing projects from localStorage
       const storedProjects = localStorage.getItem("projects");
       if (!storedProjects) {
         // If not found, redirect to home
@@ -85,17 +95,17 @@ const ProjectEdit = () => {
         return;
       }
 
-      // 2. Parse and update the relevant project
       const parsedProjects = JSON.parse(storedProjects);
       const updatedProjects = parsedProjects.map((p) =>
         p.id === project.id ? project : p
       );
 
-      // 3. Store updated projects back into localStorage
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
-      console.log("Project saved to local storage:", project);
 
-      // 4. Navigate to home
+      // Refresh the sidebar
+      triggerRefresh();
+
+      // Navigate to project list
       navigate("/");
     } catch (error) {
       console.error("Failed to save project:", error);
@@ -169,6 +179,21 @@ const ProjectEdit = () => {
           fullWidth
           margin="normal"
         />
+
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={project.isFavorite ?? false}
+              onChange={handleCheckChange}
+              name="isFavorite"
+              color="primary"
+            />
+          }
+          label="Favorite?"
+        />
+
+        <Divider variant="fullWidth" style={{ margin: "20px 0" }} />
+
         <Button variant="contained" color="primary" onClick={handleSave}>
           Update
         </Button>

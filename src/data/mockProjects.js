@@ -7,6 +7,7 @@ const mockProjects = [
     manager: "John Doe",
     description:
       "This is a brief description of Project A, outlining its objectives and scope.",
+    isFavorite: true,
   },
   {
     id: "project_b",
@@ -16,6 +17,7 @@ const mockProjects = [
     manager: "Jane Doe",
     description:
       "Project B aims to improve the efficiency of our current workflow by implementing new tools and processes.",
+    isFavorite: true,
   },
   {
     id: "project_c",
@@ -25,6 +27,7 @@ const mockProjects = [
     manager: "Alice Smith",
     description:
       "This project involves the development of a new software feature to enhance user experience.",
+    isFavorite: false,
   },
   {
     id: "project_d",
@@ -34,6 +37,7 @@ const mockProjects = [
     manager: "Bob Brown",
     description:
       "Project D focuses on conducting market research to identify new business opportunities.",
+    isFavorite: false,
   },
   {
     id: "project_e",
@@ -43,6 +47,7 @@ const mockProjects = [
     manager: "Charlie Davis",
     description:
       "This project aims to improve the overall quality of our products by implementing new quality control measures.",
+    isFavorite: false,
   },
   {
     id: "project_f",
@@ -52,6 +57,7 @@ const mockProjects = [
     manager: "Dana White",
     description:
       "Project F involves the development of a new marketing strategy to increase brand awareness.",
+    isFavorite: false,
   },
   {
     id: "project_g",
@@ -61,6 +67,7 @@ const mockProjects = [
     manager: "Evan Taylor",
     description:
       "This project focuses on improving the efficiency of our current supply chain management system.",
+    isFavorite: false,
   },
   {
     id: "project_h",
@@ -70,6 +77,7 @@ const mockProjects = [
     manager: "Fiona Garcia",
     description:
       "Project H aims to develop a new training program to enhance employee skills and knowledge.",
+    isFavorite: false,
   },
   {
     id: "project_i",
@@ -79,6 +87,7 @@ const mockProjects = [
     manager: "George Hall",
     description:
       "This project involves the implementation of new cybersecurity measures to protect company data.",
+    isFavorite: false,
   },
   {
     id: "project_j",
@@ -88,6 +97,7 @@ const mockProjects = [
     manager: "Hannah Lee",
     description:
       "Project J focuses on conducting a thorough analysis of our current financial performance.",
+    isFavorite: false,
   },
 ];
 
