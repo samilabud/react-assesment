@@ -7,11 +7,13 @@ import {
   Divider,
   FormControlLabel,
   TextField,
+  useMediaQuery,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { SidebarRefreshContext } from "../contexts/SidebarRefreshContext";
 
@@ -22,6 +24,9 @@ const ProjectEdit = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { triggerRefresh } = useContext(SidebarRefreshContext);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -192,16 +197,19 @@ const ProjectEdit = () => {
           label="Favorite?"
         />
 
-        <Divider variant="fullWidth" style={{ margin: "20px 0" }} />
+        <Divider variant="fullWidth" style={{ margin: "20px" }} />
 
         <Button variant="contained" color="primary" onClick={handleSave}>
           Update
         </Button>
+        {isMobile && (
+          <Divider variant="fullWidth" style={{ margin: "20px 0" }} />
+        )}
         <Button
           variant="contained"
           color="error"
           onClick={() => navigate("/")}
-          style={{ marginLeft: "1em" }}
+          style={!isMobile ? { marginLeft: "1em" } : {}}
         >
           Cancel
         </Button>
