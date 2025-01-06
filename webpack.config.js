@@ -52,7 +52,7 @@ module.exports = {
       directory: path.join(__dirname, "dist"),
     },
     compress: true,
-    port: process.env.REACT_APP_PORT || 3000,
+    port: 3034,
     historyApiFallback: true,
   },
   plugins: [
@@ -62,3 +62,5 @@ module.exports = {
     new Dotenv(),
   ],
 };
+
+console.log("REACT_APP_PORT:", process.env.REACT_APP_PORT);
